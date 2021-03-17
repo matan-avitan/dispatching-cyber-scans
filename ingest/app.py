@@ -8,4 +8,4 @@ api = Api(app)
 api.add_resource(Ingest, "/ingest")
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
