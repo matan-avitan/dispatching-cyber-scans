@@ -8,12 +8,15 @@ from datetime import datetime, timedelta
 class ScanApi(Resource):
 
     def post(self):
-        data = loads(request.data)
-        scan = ScanModel(scan_id=data['scan_id'], domain=data['domain'], insertion_time=datetime.now(),
-                         status="Accepted")
-        db.session.add(scan)
-        db.session.commit()
-        return {"result": "successfully got new scan"}
+        try:
+            data = request.form
+            scan = ScanModel(scan_id=data['scan_id'], domain=data['domain'], insertion_time=datetime.now(),
+                             status="Accepted")
+            db.session.add(scan)
+            db.session.commit()
+            return {"result": "success"}
+        except Exception:
+            return {"result": "Failed"}
 
     def get(self, scan_id):
         last_twenty_minutes = datetime.now() - timedelta(minutes=20)
