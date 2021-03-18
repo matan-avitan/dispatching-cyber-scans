@@ -29,7 +29,7 @@ class ScanApi(Resource):
         return {"status": status, "scan_id": scan_id}
 
     def put(self):
-        data = loads(request.data)
+        data = request.form
         scan = ScanModel.query.filter(scan_id=data['scan_id']).filter(domain=data['domain']).first()
         scan.status = data['status']
         db.session.commit()
