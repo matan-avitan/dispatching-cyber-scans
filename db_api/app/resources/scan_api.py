@@ -30,7 +30,7 @@ class ScanApi(Resource):
 
     def put(self):
         data = request.form
-        scan = ScanModel.query.filter(scan_id=data['scan_id']).filter(domain=data['domain']).first()
+        scan = ScanModel.query.filter_by(scan_id=data['scan_id']).filter_by(domain=data['domain']).first()
         scan.status = data['status']
         db.session.commit()
         return {"result": "successfully update status"}
