@@ -11,7 +11,7 @@ def my_loop(scheduler_loop):
     print(f"start loop {datetime.datetime.now()}")
     scans = requests.get("http://127.0.0.1:8080/api/scans/").json()
     for scan in scans:
-        response = os.system(f"ping -n 1 {scan['domain']}")
+        response = os.system(f"curl {scan['domain']}")
         if response == 0:
             status = "Complete"
         else:
