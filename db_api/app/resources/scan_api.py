@@ -5,7 +5,7 @@ from db_api.app.models.scan_model import db, ScanModel
 from datetime import datetime, timedelta
 
 
-class DBApi(Resource):
+class ScanApi(Resource):
 
     def post(self):
         try:
