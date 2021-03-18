@@ -15,4 +15,3 @@ class DBApi(Resource):
         db.session.commit()
         return {}
 
-
