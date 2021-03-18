@@ -13,7 +13,7 @@ class DBApi(Resource):
                          status="Accepted")
         db.session.add(scan)
         db.session.commit()
-        return {}
+        return {"result": "successfully got new scan"}
 
     def get(self, scan_id):
         last_twenty_minutes = datetime.now() - timedelta(minutes=20)
@@ -24,3 +24,10 @@ class DBApi(Resource):
         else:
             status = scan_status.status
         return {"status": status, "scan_id": scan_id}
+
+    def put(self):
+        data = loads(request.data)
+        scan = ScanModel.query.filter(scan_id=data['scan_id']).filter(domain=data['domain']).first()
+        scan.status = data['status']
+        db.session.commit()
+        return {"result": "successfully update status"}
