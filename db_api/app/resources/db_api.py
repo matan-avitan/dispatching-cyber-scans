@@ -15,3 +15,6 @@ class DBApi(Resource):
         db.session.commit()
         return {}
 
+    def get(self, scan_id):
+        scan_status = ScanModel.query.filter_by(scan_id=scan_id).first()
+        return {"status": scan_status.status, "scan_id": scan_id}

@@ -9,10 +9,10 @@ def create_app():
     api = Api(app)
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
     db.init_app(app)
-    api.add_resource(DBApi, "/db-api/")
+    api.add_resource(DBApi, "/db-api/", '/db-api/<string:scan_id>/')
 
-    with app.app_context():
-        db.drop_all()
-        db.create_all()
+    # with app.app_context():
+    #     db.drop_all()
+    #     db.create_all()
 
     return app
