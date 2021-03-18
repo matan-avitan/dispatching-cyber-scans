@@ -1,10 +1,10 @@
 from flask import Flask
 from flask_restful import Api
-from ingest.resources.ingest import Ingest
+from status.resources.status import Status
 
 
 def create_app():
     app = Flask(__name__)
     api = Api(app)
-    api.add_resource(Ingest, "/ingest/")
+    api.add_resource(Status, "/status/<string:scan_id>/")
     return app

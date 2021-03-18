@@ -12,8 +12,8 @@ def create_app():
     db.init_app(app)
     api.add_resource(ScanApi, "/db-api/", '/db-api/<string:scan_id>/')
     api.add_resource(ScansListApi, "/api/scans/")
-    # with app.app_context():
-    #     db.drop_all()
-    #     db.create_all()
+    with app.app_context():
+        db.drop_all()
+        db.create_all()
 
     return app
