@@ -1,7 +1,7 @@
 import os
 from datetime import datetime
 import requests
-from process.conf import Conf
+from process.logic.conf import Conf
 
 
 def get_new_requests():
