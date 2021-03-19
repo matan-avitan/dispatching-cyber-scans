@@ -1,11 +1,14 @@
 import uuid
 import requests
-from flask_restful import Resource
-from json import loads
 from flask import request
+from flask_restful import Resource
 
 
 class Ingest(Resource):
+    """
+    Ingest - client api to create new domain scans
+    post: add a new scan for a domain and get a unique id for the scan
+    """
 
     def post(self):
         data = request.form
@@ -16,4 +19,4 @@ class Ingest(Resource):
         if db_post_status['result'] == "success":
             return {"scan_id": scan_id}
         else:
-            return {"result": "sorry, something got wrong try again"}
+            return {"result": "Something went wrong, please try again"}
