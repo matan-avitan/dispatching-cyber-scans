@@ -1,8 +1,7 @@
 import uuid
 import requests
-from flask_restful import Resource
-from json import loads
 from flask import request
+from flask_restful import Resource
 
 
 class Ingest(Resource):
