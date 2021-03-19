@@ -1,7 +1,7 @@
 import time
 import sched
-from process.conf import Conf
-from process.utils import get_new_requests, process_scans_bulk
+from process.logic.conf import Conf
+from process.logic.utils import get_new_requests, process_scans_bulk
 
 loop = sched.scheduler(time.time, time.sleep)
 
