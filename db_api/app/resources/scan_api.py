@@ -1,11 +1,17 @@
-from flask_restful import Resource
 from flask import request
-from json import loads
-from db_api.app.models.scan_model import db, ScanModel
+from flask_restful import Resource
 from datetime import datetime, timedelta
+
+from db_api.app.models.scan_model import db, ScanModel
 
 
 class ScanApi(Resource):
+    """
+    Scan Api - request with one scan.
+    post - add new scan to the db with Accepted status
+    get - get a status for a scan from specific scan id
+    put - update a scan with new status like (Running, Error, Completed)
+    """
 
     def post(self):
         try:
