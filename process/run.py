@@ -1,24 +1,25 @@
-import os
 import time
 import sched
-import requests
-from datetime import datetime
+from process.conf import Conf
+from process.utils import get_new_requests, process_scans_bulk
 
 loop = sched.scheduler(time.time, time.sleep)
 
 
-def my_loop(scheduler_loop):
-    scans = requests.get("http://127.0.0.1:8080/db-api/scans/").json()
-    for scan in scans:
-        response = os.system(f"curl -s {scan['domain']} -o NUL")
-        if response == 0:
-            scan['status'] = "Complete"
-        else:
-            scan['status'] = "Error"
-        print(f"{scan['scan_id']} - {datetime.now()} - domain: {scan['domain']} -> {scan['status']}")
-        requests.put("http://127.0.0.1:8080/db-api/scan/", data=scan)
-    loop.enter(10, 1, my_loop, (scheduler_loop,))
+def process(scheduler_loop):
+    """
+    process component try to get every 10 seconds all the new scans.
+    it scans each one and update the status.
+    process use in curl command to check if the domain is alive.
+    """
+    try:
+        scans = get_new_requests()
+        process_scans_bulk(scans)
+    except Exception as e:
+        print(str(e))
+    finally:
+        loop.enter(Conf.LOOP_INTERVAL, Conf.LOOP_PRIORITY, process, (scheduler_loop,))
 
 
-loop.enter(5, 1, my_loop, (loop,))
+loop.enter(Conf.LOOP_INTERVAL, Conf.LOOP_PRIORITY, process, (loop,))
 loop.run()
