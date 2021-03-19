@@ -13,8 +13,11 @@ class ScansListApi(Resource):
 
     @marshal_with(resource_fields)
     def get(self):
-        scans = ScanModel.query.filter_by(status="Accepted").all()
-        for scan in scans:
-            scan.status = 'Running'
-        db.session.commit()
-        return scans
+        try:
+            scans = ScanModel.query.filter_by(status="Accepted").all()
+            for scan in scans:
+                scan.status = 'Running'
+            db.session.commit()
+            return scans
+        except Exception as e:
+            return {"result": "Failed", "error": str(e)}
