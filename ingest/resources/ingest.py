@@ -11,7 +11,7 @@ class Ingest(Resource):
         data = request.form
         domain = data['domain']
         scan_id = str(uuid.uuid4())
-        db_post_status = requests.post('http://127.0.0.1:8080/db-api/',
+        db_post_status = requests.post('http://127.0.0.1:8080/db-api/scan/',
                                        data={"scan_id": scan_id, "domain": domain}).json()
         if db_post_status['result'] == "success":
             return {"scan_id": scan_id}
