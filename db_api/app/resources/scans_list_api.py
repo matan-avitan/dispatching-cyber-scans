@@ -7,7 +7,7 @@ from db_api.app.serializers.scan_serializer import resource_fields
 
 class ScansListApi(Resource):
     """
-    Scan List Api - get a bulk of new scans
+    Scan List Api - for bulk of new scans
     get - return all new scans and update their status to Running
     """
 
