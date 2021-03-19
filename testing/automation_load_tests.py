@@ -10,7 +10,7 @@ list_of_domain = ["https://www.google.com/", 'https://www.at-bay.com/', 'https:/
                   "where_is_my_url.com", "blalalala.com", "adklasndjn.com", "adkjfgbasojfdbajfbasbd.com",
                   "akjdsdbaskjd.com", "wiki.com", "il.gov.co.il", "balagan.com"]
 
-list_of_scans = []
+list_of_scans = ["4f776153-de13-4ccb-910c-19d12f856052", ]
 
 
 def ingest_function():
