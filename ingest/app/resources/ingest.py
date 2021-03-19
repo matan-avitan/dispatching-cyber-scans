@@ -17,7 +17,7 @@ class Ingest(Resource):
         args = parser.parse_args()
         domain = args['domain']
         scan_id = str(uuid.uuid4())
-        db_post_status = requests.post(f'{Conf.BASE_API_URL}{Conf.POST_NEW_SCAN_URL}/',
+        db_post_status = requests.post(f'{Conf.BASE_API_URL}{Conf.POST_NEW_SCAN_URL}',
                                        data={"scan_id": scan_id, "domain": domain}).json()
         if db_post_status['result'] == Conf.API_STATUS:
             return {"scan_id": scan_id}
