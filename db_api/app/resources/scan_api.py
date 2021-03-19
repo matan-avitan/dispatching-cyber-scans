@@ -1,8 +1,13 @@
 from flask import request
-from flask_restful import Resource
+from flask_restful import Resource, reqparse
 from datetime import datetime, timedelta
 
 from db_api.app.models.scan_model import db, ScanModel
+
+parser = reqparse.RequestParser()
+parser.add_argument('scan_id', type=str, help='unique scan id')
+parser.add_argument('domain', type=str, help='domain to scan')
+parser.add_argument('status', type=str, help='status of the scan')
 
 
 class ScanApi(Resource):
@@ -15,14 +20,14 @@ class ScanApi(Resource):
 
     def post(self):
         try:
-            data = request.form
-            scan = ScanModel(scan_id=data['scan_id'], domain=data['domain'], insertion_time=datetime.now(),
+            args = parser.parse_args()
+            scan = ScanModel(scan_id=args['scan_id'], domain=args['domain'], insertion_time=datetime.now(),
                              status="Accepted")
             db.session.add(scan)
             db.session.commit()
             return {"result": "success"}
-        except Exception:
-            return {"result": "Failed"}
+        except Exception as e:
+            return {"result": "Failed", "error": str(e)}
 
     def get(self, scan_id):
         last_twenty_minutes = datetime.now() - timedelta(minutes=20)
@@ -35,8 +40,11 @@ class ScanApi(Resource):
         return {"status": status, "scan_id": scan_id}
 
     def put(self):
-        data = request.form
-        scan = ScanModel.query.filter_by(scan_id=data['scan_id']).filter_by(domain=data['domain']).first()
-        scan.status = data['status']
-        db.session.commit()
-        return {"result": "successfully update status"}
+        try:
+            args = parser.parse_args()
+            scan = ScanModel.query.filter_by(scan_id=args['scan_id']).filter_by(domain=args['domain']).first()
+            scan.status = args['status']
+            db.session.commit()
+            return {"result": "successfully update status"}
+        except Exception as e:
+            return {"result": "Failed", "error": str(e)}
