@@ -3,3 +3,5 @@ class Conf(object):
     POST_NEW_SCAN_URL = 'scan/'
 
     API_STATUS = "success"
+
+    NUMBER_OF_REQUEST_PARALLEL = 1
